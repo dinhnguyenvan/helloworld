@@ -9,21 +9,26 @@ var BackendController = (function () {
             var d = new Date();
             var year = d.getFullYear();
             var ageYears;
+            var ageMonths;
             if (d.getMonth() + 1 > birthday.month) {
                 ageYears = year - birthday.year;
+                ageMonths = ageYears * 12 + (d.getMonth() + 1 - birthday.month);
             }
             else if (d.getMonth() + 1 < birthday.month) {
                 ageYears = year - birthday.year - 1;
+                ageMonths = ageYears * 12 + (birthday.month - d.getMonth() + 1);
             }
             else if (d.getMonth() + 1 == birthday.month) {
                 if (d.getDate() > birthday.day || d.getDate() == birthday.day) {
                     ageYears = year - birthday.year;
+                    ageMonths = ageYears * 12;
                 }
                 else if (d.getDate() < birthday.day) {
                     ageYears = year - birthday.year - 1;
+                    ageMonths = ageYears * 12;
                 }
             }
-            var age = { years: ageYears };
+            var age = { years: ageYears, months: ageMonths };
             fulfill({ code: 200, body: age });
         });
     };

@@ -8,7 +8,7 @@ let backendController: BackendController = new BackendController();
 
 it("testing my own birthday", function () {
     let birthday: Birthday = {month: 5, day: 11, year: 1994};
-    let result: Age = {years: 22};
+    let result: Age = {years: 23, months: 277};
 
     return backendController.calculateAge(birthday).then(function (response: BackendResponse) {
         expect(response.code).to.equal(200);
@@ -19,8 +19,8 @@ it("testing my own birthday", function () {
 });
 
 it("testing today", function () {
-    let birthday: Birthday = {month: 5, day: 8, year: 1994};
-    let result: Age = {years: 23};
+    let birthday: Birthday = {month: 6, day: 17, year: 1994};
+    let result: Age = {years: 23, months: 276};
 
     return backendController.calculateAge(birthday).then(function (response: BackendResponse) {
         expect(response.code).to.equal(200);

@@ -28,7 +28,7 @@ export default class Server {
                     default: "index.html"
                 }));
 
-                that.rest.post('/calculate', Server.postCalculate);                
+                that.rest.post('/calculate', Server.postCalculateAge);                
                 
                 that.rest.listen(that.port, function () {
                     Log.info('Server::start() - restify listening: ' + that.rest.url);
@@ -46,7 +46,7 @@ export default class Server {
         });
     }
 
-    public static postCalculate(req: restify.Request, res: restify.Response, next: restify.Next) {
+    public static postCalculateAge(req: restify.Request, res: restify.Response, next: restify.Next) {
         try {
             Server.backendController.calculateAge(req.body).then(function (response: any) {
                 res.json(response.code, response.body);

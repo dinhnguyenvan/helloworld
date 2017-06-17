@@ -19,7 +19,7 @@ var Server = (function () {
                     directory: __dirname + "/views",
                     default: "index.html"
                 }));
-                that.rest.post('/calculate', Server.postCalculate);
+                that.rest.post('/calculate', Server.postCalculateAge);
                 that.rest.listen(that.port, function () {
                     Util_1.default.info('Server::start() - restify listening: ' + that.rest.url);
                     fulfill(true);
@@ -35,7 +35,7 @@ var Server = (function () {
             }
         });
     };
-    Server.postCalculate = function (req, res, next) {
+    Server.postCalculateAge = function (req, res, next) {
         try {
             Server.backendController.calculateAge(req.body).then(function (response) {
                 res.json(response.code, response.body);

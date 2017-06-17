@@ -13,6 +13,7 @@ export interface Birthday {
 
 export interface Age {
     years: number,
+    months: number
 }
 
 export default class BackendController {
@@ -27,19 +28,31 @@ export default class BackendController {
             let year = d.getFullYear();
 
             let ageYears: number;
+            let ageMonths: number;
+
+            // before birth month
             if (d.getMonth() + 1 > birthday.month) {
                 ageYears = year - birthday.year;
+                ageMonths = ageYears * 12 + (d.getMonth() + 1 - birthday.month);
+
+            // after birth month
             } else if (d.getMonth() + 1 < birthday.month) {
                 ageYears = year - birthday.year - 1;
+                ageMonths = ageYears * 12 + (birthday.month - d.getMonth() + 1);
+
+            // on the birth month
             } else if (d.getMonth() + 1 == birthday.month) {
                 if (d.getDate() > birthday.day || d.getDate() == birthday.day) {
                     ageYears = year - birthday.year;
+                    ageMonths = ageYears * 12;
                 } else if (d.getDate() < birthday.day) {
                     ageYears = year - birthday.year - 1;
+                    ageMonths = ageYears * 12;
                 }
             }
 
-            let age: Age = {years: ageYears};
+            // final age object
+            let age: Age = {years: ageYears, months: ageMonths};
             fulfill({code: 200, body: age});
         })
     }
