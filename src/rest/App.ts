@@ -16,4 +16,4 @@ export class App {
 
 Log.info('App - starting');
 let app = new App();
-app.initServer(4300);
+app.initServer(process.env.PORT || 4300);
