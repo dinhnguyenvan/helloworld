@@ -15,7 +15,10 @@ export interface Age {
     years: number,
     months: number,
     weeks: number,
-    days: number
+    days: number,
+    hours: number,
+    minutes: number,
+    seconds: number
 }
 
 export default class BackendController {
@@ -55,8 +58,11 @@ export default class BackendController {
             let ageMonths: number = betweenMonths(birthDate, today);
             let ageYears: number = Math.floor(ageDays / 365);
             let ageWeeks: number = Math.floor(ageDays / 7);
-            
-            let age: Age = {years: ageYears, months: ageMonths, weeks: ageWeeks, days: ageDays};
+            let ageHours: number = ageDays * 24;
+            let ageMinutes: number = ageHours * 60;
+            let ageSeconds: number = ageMinutes * 60;
+
+            let age: Age = {years: ageYears, months: ageMonths, weeks: ageWeeks, days: ageDays, hours: ageHours, minutes: ageMinutes, seconds: ageSeconds};
             fulfill({code: 200, body: age});
         })
     }
