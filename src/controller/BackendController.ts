@@ -13,7 +13,9 @@ export interface Birthday {
 
 export interface Age {
     years: number,
-    months: number
+    months: number,
+    weeks: number,
+    days: number
 }
 
 export default class BackendController {
@@ -24,35 +26,37 @@ export default class BackendController {
 
     calculateAge(birthday: Birthday): Promise<BackendResponse> {
         return new Promise(function (fulfill, reject) {            
-            let d: any = new Date();
-            let year = d.getFullYear();
+            let d: Date = new Date();
+            let year: number = d.getFullYear();
+            let month: number = d.getMonth() + 1;
+            let date: number = d.getDate();
 
-            let ageYears: number;
-            let ageMonths: number;
+            let birthDate: Date = new Date(birthday.year, birthday.month, birthday.day);
+            let today: Date = new Date(year, month, date);
 
-            // before birth month
-            if (d.getMonth() + 1 > birthday.month) {
-                ageYears = year - birthday.year;
-                ageMonths = ageYears * 12 + (d.getMonth() + 1 - birthday.month);
+            let betweenDays = function(date1: Date, date2: Date): number {
+                let oneDay: number = 1000 * 60 * 60 * 24;
+                let ms1: number = date1.getTime();
+                let ms2: number = date2.getTime();
+                let difference: number = ms2 - ms1;
 
-            // after birth month
-            } else if (d.getMonth() + 1 < birthday.month) {
-                ageYears = year - birthday.year - 1;
-                ageMonths = ageYears * 12 + (birthday.month - d.getMonth() + 1);
-
-            // on the birth month
-            } else if (d.getMonth() + 1 == birthday.month) {
-                if (d.getDate() > birthday.day || d.getDate() == birthday.day) {
-                    ageYears = year - birthday.year;
-                    ageMonths = ageYears * 12;
-                } else if (d.getDate() < birthday.day) {
-                    ageYears = year - birthday.year - 1;
-                    ageMonths = ageYears * 12;
-                }
+                return Math.round(difference/oneDay);
             }
 
-            // final age object
-            let age: Age = {years: ageYears, months: ageMonths};
+            let betweenMonths = function(date1: Date, date2: Date): number {
+                let months: number = (date2.getFullYear() - date1.getFullYear()) * 12;
+                months -= date1.getMonth() + 1;
+                months += date2.getMonth();
+                
+                return months <= 0 ? 0 : months;
+            }
+            
+            let ageDays: number = betweenDays(birthDate, today);
+            let ageMonths: number = betweenMonths(birthDate, today);
+            let ageYears: number = Math.floor(ageDays / 365);
+            let ageWeeks: number = Math.floor(ageDays / 7);
+            
+            let age: Age = {years: ageYears, months: ageMonths, weeks: ageWeeks, days: ageDays};
             fulfill({code: 200, body: age});
         })
     }
