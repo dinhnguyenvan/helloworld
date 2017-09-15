@@ -29,16 +29,16 @@ export default class BackendController {
 
     public calculateAge(birthday: Birthday): Promise<BackendResponse> {
         return new Promise(function (fulfill, reject) {
+            if (birthday == null || birthday == {} || birthday == undefined) {
+                reject({code: 400, body: {error: "somethings not quite right"}});
+            }
+            
             try {
-                if (birthday == null || birthday == {} || birthday == undefined) {
-                    reject({code: 400, body: {error: "somethings not quite right"}});
-                }
-
                 let d: Date = new Date();
                 let year: number = d.getFullYear();
                 let month: number = d.getMonth() + 1;
                 let date: number = d.getDate();
-
+                
                 let birthDate: Date = new Date(birthday.year, birthday.month, birthday.day);
                 let today: Date = new Date(year, month, date);
 
@@ -69,6 +69,7 @@ export default class BackendController {
                 
                 let age: Age = {years: ageYears, months: ageMonths, weeks: ageWeeks, days: ageDays, hours: ageHours, minutes: ageMinutes, seconds: ageSeconds};
                 fulfill({code: 200, body: {age}});
+
             } catch (err) {
                 reject({code: 400, body: {error: err}});
             }

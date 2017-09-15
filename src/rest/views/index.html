@@ -91,7 +91,7 @@
             var day = $("#day").val();
             var year = $("#year").val();
 
-            var birthday = {"MONTH": month, "DAY": day, "YEAR": year};
+            var birthday = {"month": month, "day": day, "year": year};
             birthday = JSON.stringify(birthday);
             console.log("birthday: ", birthday);
             $.ajax({
