@@ -1,6 +1,6 @@
 import restify = require('restify');
 import Log from "../rest/Util";
-import {BackendResponse, Birthday, Age} from "../controller/BackendController";
+import {BackendResponse} from "../controller/BackendController";
 import BackendController from "../controller/BackendController";
 
 export default class Server {
@@ -22,6 +22,8 @@ export default class Server {
                 that.rest = restify.createServer({
                     name: 'AgeCalculator'
                 });
+
+                that.rest.use(restify.bodyParser({mapParams: true, mapFiles: true}));
 
                 that.rest.get('/.*/', restify.serveStatic({
                     directory: __dirname + "/views",

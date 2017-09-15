@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <!-- ><script src='https://code.responsivevoice.org/responsivevoice.js'></script> -->
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -58,6 +60,18 @@
                 <ul class="list-unstyled">
                     <li>Lets Find Out!</li>
                 </ul>
+                
+                <label>Month:</label>
+                <input type="text" id="month">
+                
+                <label>Day:</label>
+                <input type="text" id="day">
+
+                <label>Year:</label>
+                <input type="text" id="year"></br>
+
+                <button id="submit">Submit</button>
+
             </div>
         </div>
         <!-- /.row -->
@@ -70,6 +84,31 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+
+    <script>
+        $("#submit").click(function() {
+            var month = $("#month").val();
+            var day = $("#day").val();
+            var year = $("#year").val();
+
+            var birthday = {"MONTH": month, "DAY": day, "YEAR": year};
+            birthday = JSON.stringify(birthday);
+            console.log("birthday: ", birthday);
+            $.ajax({
+                url: 'http://localhost:4300/calculate',
+                type: 'post',
+                data: birthday,
+                dataType: 'json',
+                contentType: 'application/json'
+            }).done(function(age) {
+                console.log("age: ", age);
+        
+            }).fail(function() {
+                console.error("ERROR - Failed to submit query");
+            });
+        });
+    </script>
+
 </body>
 
 </html>

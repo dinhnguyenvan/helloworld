@@ -8,13 +8,24 @@ let backendController: BackendController = new BackendController();
 
 it("testing my own birthday", function () {
     let birthday: Birthday = {month: 5, day: 11, year: 1994};
-    let result: Age = {years: 23, months: 277, weeks: 1208, days: 8461, hours: 203064, minutes: 12183840, seconds: 731030400};
+    let age: Age = {years: 23, months: 279, weeks: 1218, days: 8526, 
+        hours: 204624, minutes: 12277440, seconds: 736646400};
 
     return backendController.calculateAge(birthday).then(function (response: BackendResponse) {
         expect(response.code).to.equal(200);
         console.log(response.body);
-        expect(response.body).to.deep.equal(result);
+        expect(response.body).to.deep.equal(age);
     }).catch(function () {
         expect.fail();
+    });
+});
+
+it("testing bad case", function () {
+    let birthday: any = null;
+
+    return backendController.calculateAge(birthday).then(function () {
+        expect.fail();
+    }).catch(function (response: BackendResponse) {
+        expect(response.code).to.equal(400);
     });
 });
