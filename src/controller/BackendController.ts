@@ -32,13 +32,13 @@ export default class BackendController {
             if (birthday == null || birthday == {} || birthday == undefined) {
                 reject({code: 400, body: {error: "somethings not quite right"}});
             }
-            
+
             try {
                 let d: Date = new Date();
                 let year: number = d.getFullYear();
                 let month: number = d.getMonth() + 1;
                 let date: number = d.getDate();
-                
+
                 let birthDate: Date = new Date(birthday.year, birthday.month, birthday.day);
                 let today: Date = new Date(year, month, date);
 
@@ -66,10 +66,11 @@ export default class BackendController {
                 let ageHours: number = ageDays * 24;
                 let ageMinutes: number = ageHours * 60;
                 let ageSeconds: number = ageMinutes * 60;
-                
-                let age: Age = {years: ageYears, months: ageMonths, weeks: ageWeeks, days: ageDays, hours: ageHours, minutes: ageMinutes, seconds: ageSeconds};
-                fulfill({code: 200, body: {age}});
 
+                let age: Age = {years: ageYears, months: ageMonths, weeks: ageWeeks, days: ageDays, 
+                                hours: ageHours, minutes: ageMinutes, seconds: ageSeconds};
+                
+                fulfill({code: 200, body: age});
             } catch (err) {
                 reject({code: 400, body: {error: err}});
             }
