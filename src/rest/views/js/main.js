@@ -3,7 +3,6 @@ $(function () {
         var month = $("#month").val();
         var day = $("#day").val();
         var year = $("#year").val();
-
         var birthday = {"month": month, "day": day, "year": year};
         birthday = JSON.stringify(birthday);
         console.log("birthday: ", birthday);

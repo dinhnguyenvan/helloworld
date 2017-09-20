@@ -14,7 +14,7 @@ export default class Log {
     public static error(msg: string) {
         console.error("<E> " + new Date().toLocaleString() + ": " + msg);
     }
-
+    
     public static test(msg: string) {
         console.log("<X> " + new Date().toLocaleString() + ": " + msg);
     }

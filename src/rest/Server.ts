@@ -1,4 +1,4 @@
-import restify = require('restify');
+import restify = require("restify");
 import Log from "../rest/Util";
 import {BackendResponse} from "../controller/BackendController";
 import BackendController from "../controller/BackendController";
@@ -9,7 +9,7 @@ export default class Server {
     private static backendController = new BackendController();
 
     constructor(port: number) {
-        Log.info("Server::<init>( " + port + " )");
+        Log.info("Server::<init>(" + port + ")");
         this.port = port;
     }
 
@@ -17,32 +17,24 @@ export default class Server {
         let that = this;
         return new Promise(function (fulfill, reject) {
             try {
-                Log.info('Server::start() - start');
+                Log.info("Server::start() - start");
 
-                that.rest = restify.createServer({
-                    name: 'AgeCalculator'
-                });
-
+                that.rest = restify.createServer({name: "AgeCalculator"});
                 that.rest.use(restify.bodyParser({mapParams: true, mapFiles: true}));
+                that.rest.get("/.*/", restify.serveStatic({directory: __dirname + "/views", default: "index.html"}));
+                that.rest.post("/calculate", Server.postCalculateAge);
 
-                that.rest.get('/.*/', restify.serveStatic({
-                    directory: __dirname + "/views",
-                    default: "index.html"
-                }));
-
-                that.rest.post('/calculate', Server.postCalculateAge);                
-                
                 that.rest.listen(that.port, function () {
-                    Log.info('Server::start() - restify listening: ' + that.rest.url);
+                    Log.info("Server::start() - restify listen: " + that.rest.url);
                     fulfill(true);
                 });
 
-                that.rest.on('error', function (err: string) {
-                    Log.info('Server::start() - restify ERROR: ' + err);
+                that.rest.on("error", function (err: string) {
+                    Log.info("Server::start() - restify ERROR: " + err);
                     reject(err);
                 });
             } catch (err) {
-                Log.error('Server::start() - ERROR: ' + err);
+                Log.error("Server::start() - ERROR: " + err);
                 reject(err);
             }
         });

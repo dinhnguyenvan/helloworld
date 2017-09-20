@@ -1,9 +1,9 @@
-import Server from './Server';
-import Log from './Util';
+import Server from "./Server";
+import Log from "./Util";
 
 export class App {
     public initServer(port: number) {
-        Log.info('App::initServer( ' + port + ' ) - start');
+        Log.info("App::initServer(" + port + ") - start");
 
         let s = new Server(port);
         s.start().then(function (val: boolean) {
@@ -14,6 +14,6 @@ export class App {
     }
 }
 
-Log.info('App - starting');
+Log.info("App - starting");
 let app = new App();
 app.initServer(process.env.PORT || 4300);
