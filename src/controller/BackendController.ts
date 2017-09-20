@@ -41,7 +41,7 @@ export default class BackendController {
 
                 let birthDate: Date = new Date(birthday.year, birthday.month, birthday.day);
                 let today: Date = new Date(year, month, date);
-                
+
                 let betweenDays = function(date1: Date, date2: Date): number {
                     let oneDay: number = 1000 * 60 * 60 * 24;
                     let ms1: number = date1.getTime();
@@ -58,7 +58,7 @@ export default class BackendController {
                     
                     return months <= 0 ? 0 : months;
                 }
-
+                
                 let ageDays: number = betweenDays(birthDate, today);
                 let ageMonths: number = betweenMonths(birthDate, today);
                 let ageYears: number = Math.floor(ageDays / 365);
