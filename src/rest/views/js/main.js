@@ -7,7 +7,7 @@ $(function () {
         birthday = JSON.stringify(birthday);
         console.log("birthday: ", birthday);
         $.ajax({
-            url: 'https://agecalculatorapp.herokuapp.com/calculate',
+            url: 'https://wooddecor.herokuapp.com/calculate',
             type: 'post',
             data: birthday,
             dataType: 'json',
